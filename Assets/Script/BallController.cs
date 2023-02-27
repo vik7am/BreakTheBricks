@@ -28,14 +28,10 @@ public class BallController : MonoBehaviour
         rb.velocity = velocity;
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        float absX = Mathf.Abs(transform.position.x);
-        float absY = Mathf.Abs(transform.position.y);
-        if( absX > absY)
-            velocity = new Vector2(-velocity.x, velocity.y);
-        else if(absY >absX)
-            velocity = new Vector2(velocity.x, -velocity.y);
-        else
-            velocity = -velocity;
+    public Vector2 GetVelocity(){
+        return rb.velocity;
+    }
+    public void SetVelocity(float x, float y){
+        velocity = new Vector2(x, y);
     }
 }
