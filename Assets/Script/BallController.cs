@@ -12,15 +12,11 @@ public class BallController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update(){
-        if(Input.GetKeyDown(KeyCode.Space))
-            MoveInRandomDirection();
+    void Start(){
+        rb.velocity = transform.up * speed; 
     }
 
-    void MoveInRandomDirection(){
-        direction = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f));
-        //direction = new Vector2(1, 1);
-        direction = direction.normalized;
-        rb.velocity = speed * direction;
+    private void OnTriggerEnter2D(Collider2D other) {
+        Destroy(gameObject);
     }
 }
