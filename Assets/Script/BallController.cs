@@ -28,6 +28,22 @@ public class BallController : MonoBehaviour
         rb.velocity = velocity;
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.GetComponent<WallController>()){
+            WallController wallController = other.GetComponent<WallController>();
+            int edgeType = wallController.GetEdgeType(transform.position);
+            rb.velocity = direction * speed;
+        }
+    }
+
+    void updateDirection(int edgeType){
+        switch(edgeType){
+            case 0: direction = new Vector2(-direction.x, direction.y); break;
+            case 1: direction = new Vector2(direction.x, -direction.y); break;
+            case 2: direction = new Vector2(-direction.x, -direction.y); break;
+        }
+    }
+
     public Vector2 GetVelocity(){
         return rb.velocity;
     }
