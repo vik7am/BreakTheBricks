@@ -14,8 +14,11 @@ public class BrickController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other) {
         number--;
-        if(number == 0)
+        if(number == 0){
+            LevelManger.Instance.updateNoOfBricks();
             Destroy(gameObject);
+        }
+            
         updateText();
     }
 

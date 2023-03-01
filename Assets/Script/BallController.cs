@@ -17,6 +17,7 @@ public class BallController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        LevelManger.Instance.UpdateNoOfBalls();
         Destroy(gameObject);
     }
 }

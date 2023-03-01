@@ -6,11 +6,11 @@ public class BallSpawner : MonoBehaviour
 {
     [SerializeField] int rotationSpeed;
     [SerializeField] BallController ball;
-    [SerializeField] int noOfBalls;
+    int noOfBalls;
     bool activated;
 
     void Start(){
-        activated = false;
+        ResetSpawner();
     }
 
     void Update(){
@@ -35,5 +35,16 @@ public class BallSpawner : MonoBehaviour
             Instantiate(ball, transform.position, transform.rotation);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void UpdateNoOfBalls(){
+        noOfBalls--;
+        if(noOfBalls == 0)
+            ResetSpawner();
+    }
+
+    void ResetSpawner(){
+        activated = false;
+        noOfBalls = LevelManger.Instance.GetNoOfballs();
     }
 }
