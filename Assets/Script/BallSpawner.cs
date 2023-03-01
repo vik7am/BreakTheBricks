@@ -10,7 +10,7 @@ public class BallSpawner : MonoBehaviour
     bool readyToShoot;
     float maxLeftSideRange = 0.5f;
     float maxRightSideRange = -0.5f;
-    float ballspawnDelay = 0.15f;
+    float ballspawnDelay = 0.1f;
 
     void Start(){
         totalBalls = LevelManger.Instance.GetNoOfballsToSpawn();

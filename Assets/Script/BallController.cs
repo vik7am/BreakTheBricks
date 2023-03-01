@@ -6,7 +6,6 @@ public class BallController : MonoBehaviour
     [SerializeField] float lifeTime;
     Rigidbody2D rb;
     Vector2 direction;
-    
 
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
@@ -18,7 +17,7 @@ public class BallController : MonoBehaviour
 
     void Update() {
         lifeTime -= Time.deltaTime;
-        if(lifeTime<=0)
+        if(lifeTime <= 0)
             DestroyBall();
     }
 

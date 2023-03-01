@@ -30,7 +30,8 @@ public class LevelManger : MonoBehaviour
 
     public void LoadNextLevel(){
         int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        int nextLevel = (currentLevel+1) % 5; //update code later
+        int totalLevels = SceneManager.sceneCountInBuildSettings;
+        int nextLevel = (currentLevel+1) % totalLevels;
         LoadLevel((Level)nextLevel);
     }
 
