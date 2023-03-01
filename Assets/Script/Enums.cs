@@ -6,3 +6,9 @@ public enum Level{
     LEVEL_3,
     LEVEL_4,
 }
+
+public enum BrickType{
+    BREAKABLE_BRICK,
+    UNBREAKABLE_BRICK,
+    LAVA_BRICK
+}
