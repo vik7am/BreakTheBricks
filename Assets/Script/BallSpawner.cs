@@ -5,20 +5,20 @@ public class BallSpawner : MonoBehaviour
 {
     [SerializeField] int rotationSpeed;
     [SerializeField] BallController ball;
-    int noOfBalls;
-    bool levelCompled;
+    int totalBalls;
+    int ballsLeft;
     bool readyToShoot;
     float maxLeftSideRange = 0.5f;
     float maxRightSideRange = -0.5f;
-    float ballspawnDelay = 0.1f;
+    float ballspawnDelay = 0.15f;
 
     void Start(){
-        levelCompled = false;
+        totalBalls = LevelManger.Instance.GetNoOfballsToSpawn();
         ResetSpawner();
     }
 
     void Update(){
-        if(readyToShoot && !levelCompled)
+        if(readyToShoot)
             CheckForPlayerInput();
     }
 
@@ -34,15 +34,15 @@ public class BallSpawner : MonoBehaviour
     }
 
     IEnumerator SpawnBall(){
-        for(int i=0; i<noOfBalls; i++){
+        for(int i=0; i<totalBalls; i++){
             Instantiate(ball, transform.position, transform.rotation);
             yield return new WaitForSeconds(ballspawnDelay);
         }
     }
 
     public void UpdateNoOfBallsLeft(){
-        noOfBalls--;
-        if(noOfBalls == 0)
+        ballsLeft--;
+        if(ballsLeft == 0)
             ResetSpawner();
     }
 
@@ -50,6 +50,6 @@ public class BallSpawner : MonoBehaviour
         if(LevelManger.Instance.IsLevelCompleted())
             return;
         readyToShoot = true;
-        noOfBalls = LevelManger.Instance.GetNoOfballsToSpawn();
+        ballsLeft = totalBalls;
     }
 }
