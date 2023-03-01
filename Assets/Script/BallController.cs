@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
     [SerializeField] float speed;
+    [SerializeField] float lifeTime;
     Rigidbody2D rb;
     Vector2 direction;
+    
 
     void Awake(){
         rb = GetComponent<Rigidbody2D>();
@@ -16,8 +16,18 @@ public class BallController : MonoBehaviour
         rb.velocity = transform.up * speed; 
     }
 
+    void Update() {
+        lifeTime -= Time.deltaTime;
+        if(lifeTime<=0)
+            DestroyBall();
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
-        LevelManger.Instance.UpdateNoOfBalls();
+        DestroyBall();
+    }
+
+    void DestroyBall(){
+        LevelManger.Instance.UpdateNoOfBallsLeft();
         Destroy(gameObject);
     }
 }

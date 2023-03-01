@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +16,6 @@ public class LevelUIManager : MonoBehaviour
     }
 
     void ExitGame(){
-        Application.Quit();
+        LevelManger.Instance.LoadLevel(Level.MAIN_MENU);
     }
 }

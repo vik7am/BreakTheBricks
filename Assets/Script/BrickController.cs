@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -19,17 +17,10 @@ public class BrickController : MonoBehaviour
             return;
         number--;
         if(number == 0){
-            LevelManger.Instance.updateNoOfBricks();
+            LevelManger.Instance.updateNoOfBricksLeft();
             Destroy(gameObject);
         }
         updateText();
-    }
-
-    void OnTriggerEnter2D(Collider2D other) {
-        if(other.GetComponent<BallController>()){
-            LevelManger.Instance.UpdateNoOfBalls();
-            Destroy(other.gameObject);
-        }
     }
 
     void updateText(){

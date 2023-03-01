@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,8 +7,8 @@ public class LevelManger : MonoBehaviour
     MenuUIManager menuUI;
     [SerializeField] LevelUIManager levelUI;
     [SerializeField] BallSpawner ballSpawner;
-    [SerializeField] int noOfBricks;
-    [SerializeField] int noOfBalls;
+    [SerializeField] int totalBricks;
+    [SerializeField] int totalBalls;
 
     public static LevelManger Instance{ get{ return instance; }}
 
@@ -26,15 +24,13 @@ public class LevelManger : MonoBehaviour
         levelUI.gameObject.SetActive(true);
     }
 
-    public void updateNoOfBricks(){
-        noOfBricks--;
-        if(noOfBricks == 0)
-            LevelCompleted();
+    public bool IsLevelCompleted(){
+        return levelUI.gameObject.activeSelf;
     }
 
     public void LoadNextLevel(){
         int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        int nextLevel = (currentLevel+1) % 5;
+        int nextLevel = (currentLevel+1) % 5; //update code later
         LoadLevel((Level)nextLevel);
     }
 
@@ -42,11 +38,17 @@ public class LevelManger : MonoBehaviour
         SceneManager.LoadScene((int)level);
     }
 
-    public int GetNoOfballs(){
-        return noOfBalls;
+    public int GetNoOfballsToSpawn(){
+        return totalBalls;
     }
 
-    public void UpdateNoOfBalls(){
-        ballSpawner.UpdateNoOfBalls();
+    public void updateNoOfBricksLeft(){
+        totalBricks--;
+        if(totalBricks == 0)
+            LevelCompleted();
+    }
+
+    public void UpdateNoOfBallsLeft(){
+        ballSpawner.UpdateNoOfBallsLeft();
     }
 }

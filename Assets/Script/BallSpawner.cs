@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallSpawner : MonoBehaviour
@@ -7,25 +6,29 @@ public class BallSpawner : MonoBehaviour
     [SerializeField] int rotationSpeed;
     [SerializeField] BallController ball;
     int noOfBalls;
-    bool activated;
+    bool levelCompled;
+    bool readyToShoot;
+    float maxLeftSideRange = 0.5f;
+    float maxRightSideRange = -0.5f;
+    float ballspawnDelay = 0.1f;
 
     void Start(){
+        levelCompled = false;
         ResetSpawner();
     }
 
     void Update(){
-        if(activated)
-            return;
-        CheckForPlayerInput();
+        if(readyToShoot && !levelCompled)
+            CheckForPlayerInput();
     }
 
     void CheckForPlayerInput(){
-        if(Input.GetKey(KeyCode.A) && transform.rotation.z < 0.50f)
+        if(Input.GetKey(KeyCode.A) && transform.rotation.z < maxLeftSideRange)
             transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-        if(Input.GetKey(KeyCode.D) && transform.rotation.z > -0.50f)
+        if(Input.GetKey(KeyCode.D) && transform.rotation.z > maxRightSideRange)
             transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
         if(Input.GetKeyDown(KeyCode.Space)){
-            activated = true;
+            readyToShoot = false;
             StartCoroutine(SpawnBall());
         }
     }
@@ -33,18 +36,20 @@ public class BallSpawner : MonoBehaviour
     IEnumerator SpawnBall(){
         for(int i=0; i<noOfBalls; i++){
             Instantiate(ball, transform.position, transform.rotation);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(ballspawnDelay);
         }
     }
 
-    public void UpdateNoOfBalls(){
+    public void UpdateNoOfBallsLeft(){
         noOfBalls--;
         if(noOfBalls == 0)
             ResetSpawner();
     }
 
     void ResetSpawner(){
-        activated = false;
-        noOfBalls = LevelManger.Instance.GetNoOfballs();
+        if(LevelManger.Instance.IsLevelCompleted())
+            return;
+        readyToShoot = true;
+        noOfBalls = LevelManger.Instance.GetNoOfballsToSpawn();
     }
 }
